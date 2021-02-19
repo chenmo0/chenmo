@@ -140,6 +140,9 @@ Plug 'mhinz/vim-startify' "启动界面
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
+" 自定义css样式
+" let g:mkdp_markdown_css = '/home/chenmo/work/a.css'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Plug 'joshdick/onedark.vim' "onedark主题
@@ -162,7 +165,25 @@ let g:OmniSharp_highlighting = 0
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'} "coc.nvim配置
 
-" 使用K现实文档
+" coc插件列表
+let g:coc_global_extensions = [ 
+            \'coc-clangd', 
+            \'coc-cmake', 
+            \'coc-css', 
+            \'coc-emmet', 
+            \'coc-eslint', 
+            \'coc-html', 
+            \'coc-json', 
+            \'coc-omnisharp', 
+            \'coc-pyright', 
+            \'coc-sh', 
+            \'coc-tsserver', 
+            \'coc-vimlsp',
+            \'coc-actions',
+            \'coc-explorer',
+            \]
+
+" 使用'K'查看文档
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -196,7 +217,7 @@ command! -nargs=0 Format :call CocAction('format')
 "状态行支持
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" 使用'[g'跳转到前一个错误，']g'跳转到后一个错误
+" 使用'<leader>n'跳转到前一个错误，'<leader>m'跳转到后一个错误
 nmap <silent> <leader>n <Plug>(coc-diagnostic-prev)
 nmap <silent> <leader>m <Plug>(coc-diagnostic-next)
 
@@ -212,33 +233,11 @@ function! s:cocActionsOpenFromSelected(type) abort
 endfunction
 xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
 nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
-
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" coc插件列表
-let g:coc_global_extensions = [ 
-            \'coc-clangd', 
-            \'coc-cmake', 
-            \'coc-css', 
-            \'coc-emmet', 
-            \'coc-eslint', 
-            \'coc-html', 
-            \'coc-json', 
-            \'coc-omnisharp', 
-            \'coc-pyright', 
-            \'coc-sh', 
-            \'coc-tsserver', 
-            \'coc-vimlsp',
-            \'coc-actions',
-            \'coc-explorer',
-            \]
-
 " coc-explorer启动目录
 nnoremap <leader>ff :CocCommand explorer<CR>
-
-" vim启动后打开文件目录
-" autocmd VimEnter * CocCommand explorer
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
