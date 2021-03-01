@@ -1,0 +1,16 @@
+{
+    "clangd.path": "clangd-10",
+    "clangd.semanticHighlighting": true,
+    "coc.preferences.extensionUpdateCheck": "daily",
+    "languageserver": {
+        "lua": {
+            "command": "lua-lsp",
+            "filetypes": ["lua"]
+        }
+    },
+    "explorer.file.hiddenRules": {
+        "extensions": [
+            "meta"
+        ]
+    }
+}
