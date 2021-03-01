@@ -199,7 +199,7 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 " 按住光标时突出显示符号及其参考
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" 符号重命名
+" 重命名快捷键
 nmap <leader>rn <Plug>(coc-rename)
 
 " 重新定义 <C-f> 和 <C-b> 用来滚动浮动窗口
@@ -244,6 +244,7 @@ nnoremap <leader>ff :CocCommand explorer<CR>
 
 " hlsl语法高亮
 Plug 'beyondmarc/hlsl.vim'
+
 " 启用此插件
 set rtp^=/path/to/hlsl.vim
 
@@ -252,19 +253,21 @@ set rtp^=/path/to/hlsl.vim
 " 在浏览器中预览markdown，依赖node.js和全局yarn
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
-" 自定义css样式地址，必须写最完整地址
-" let g:mkdp_markdown_css = '/home/chenmo/.config/nvim/markdown_css/a.css'
+" 自定义css样式地址，写最完整地址或用'~'代替用户目录写为expand('~/a.css')
+" let g:mkdp_markdown_css = expand('~/.config/nvim/markdown_css/a.css')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " onedark主题
 Plug 'joshdick/onedark.vim'
+
 " nvim加载完成后启用onedark主题
 autocmd VimEnter * colorscheme onedark
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Plug 'OmniSharp/omnisharp-vim' "c#插件
+" c#插件
+Plug 'OmniSharp/omnisharp-vim'
 
 " 使用本机mono
 let g:OmniSharp_server_use_mono = 1
@@ -287,19 +290,24 @@ Plug 'vim-airline/vim-airline-themes'
 
 " 缩进线
 Plug 'Yggdroot/indentLine'
+
+" 在json,markdown,scheme文件中关闭缩进线，在其他文件中打开
 autocmd FileType json,markdown,scheme let g:indentLine_conceallevel=0
 autocmd FileType javascript,python,c,cpp,java,vim,shell let g:indentLine_conceallevel=2
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" 代码文本结构
+" 查看代码结构
 Plug 'preservim/tagbar'
+
+" 设置快捷键
 nnoremap <leader>tt :TagbarToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " 彩虹括号
 Plug 'luochen1990/rainbow'
+
 " 启用彩虹括号
 let g:rainbow_active = 1
 
@@ -311,6 +319,7 @@ Plug 'sbdchd/neoformat'
 " 设置neoformat快捷键
 nnoremap <leader>bb :Neoformat<CR>
 
+" 必须写最完整地址
 " 设置js格式化的所用程序
 let g:neoformat_javascript_jsbeautify = {
             \ 'exe': '/home/chenmo/node_modules/.bin/js-beautify',
@@ -333,7 +342,9 @@ let g:neoformat_enabled_lua=['luafmt']
 
 " lisp相关
 Plug 'vim-scripts/paredit.vim'
-autocmd FileType javascript,python,c,cpp,java,vim,shell,lua,json,markdown,csharp inoremap <cr> <cr>
+
+" 在scheme文件中回车自动对齐
 autocmd FileType scheme imap <cr> <a-cr>
+autocmd FileType javascript,python,c,cpp,java,vim,shell,lua,json,markdown,csharp inoremap <cr> <cr>
 
 call plug#end()
