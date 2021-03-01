@@ -158,7 +158,7 @@ Plug 'mattn/emmet-vim'
 " have插件
 Plug 'jdonaldson/vaxe'
 
-" 语义突出显示，依赖coc.nvim和coc-clangd
+" c类语言根据语义高亮，依赖coc.nvim和coc-clangd
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
