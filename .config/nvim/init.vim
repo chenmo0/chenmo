@@ -252,8 +252,8 @@ set rtp^=/path/to/hlsl.vim
 " 在浏览器中预览markdown，依赖node.js和全局yarn
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
-" 自定义css样式
-" let g:mkdp_markdown_css = '~/.config/nvim/markdown_css/a.css'
+" 自定义css样式地址，必须写最完整地址
+" let g:mkdp_markdown_css = '/home/chenmo/.config/nvim/markdown_css/a.css'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
