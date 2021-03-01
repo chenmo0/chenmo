@@ -249,8 +249,9 @@ set rtp^=/path/to/hlsl.vim
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" 在浏览器中预览markdown
+" 在浏览器中预览markdown，依赖node.js和全局yarn
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+
 " 自定义css样式
 " let g:mkdp_markdown_css = '~/.config/nvim/markdown_css/a.css'
 
