@@ -7,9 +7,6 @@ set hidden
 " nvim新功能，替换时预览
 set inccommand=split
 
-" 显示行数
-" set number
-
 " c语言自动缩进
 " set cindent
 
@@ -30,26 +27,21 @@ nnoremap <leader>vv gg0<c-v>G=''
 set cursorline
 " set cursorcolumn
 
-" 不兼容vi快捷键
-set nocompatible
-
 " 更快的提示时间
 set updatetime=300
-
-" tab键设为4格
-set tabstop=4
 
 " 自动将 Tab 转为空格
 set expandtab
 
-" Tab 转为多少个空格
+" tab键转为4个空格
 set softtabstop=4
 set ts=4 sw=4 et
+set tabstop=4
 
 " 打开语法高亮
 syntax on
 
-" 在底部显示，当前处于命令模式还是插入模式
+" 在底部显示，当前处于哪种模式
 set showmode
 
 " 命令模式下，在底部显示，当前键入的指令
@@ -61,8 +53,19 @@ set encoding=utf-8
 " 启用256色
 set t_Co=256
 
-" 不自动折行
-set nowrap
+" 在txt和markdown文件中启用折行和行号，其他文件中关闭
+function YesorNoWrap()
+    if &filetype=="txt"||&filetype=="markdown"
+        set wrap number
+        set signcolumn=auto
+        nnoremap <buffer> j gj
+        nnoremap <buffer> k gk
+    else
+        set nowrap nonumber
+        set signcolumn=yes
+    endif
+endfunction
+autocmd FileType * call YesorNoWrap()
 
 " 垂直滚动时，光标距离顶部/底部的位置
 " set scrolloff=5
@@ -103,15 +106,6 @@ set wildmode=longest:list,full
 
 " 长行平滑后移
 set sidescroll=1
-
-
-" 留出提示列空间
-if has("patch-8.1.1564")
-    " 新版(neo)vim合并提示列和行号列
-    set signcolumn=number
-else
-    set signcolumn=yes
-endif
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -258,14 +252,6 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" onedark主题
-Plug 'joshdick/onedark.vim'
-
-" nvim加载完成后启用onedark主题
-autocmd VimEnter * colorscheme onedark
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " c#插件
 Plug 'OmniSharp/omnisharp-vim'
 
@@ -277,6 +263,14 @@ let g:OmniSharp_server_stdio = 1
 
 " 关闭语法高亮
 let g:OmniSharp_highlighting = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" onedark主题
+Plug 'joshdick/onedark.vim'
+
+" nvim加载完成后启用onedark主题
+autocmd VimEnter * colorscheme onedark
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -292,8 +286,14 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
 
 " 在json,markdown,scheme文件中关闭缩进线，在其他文件中打开
-autocmd FileType json,markdown,scheme let g:indentLine_conceallevel=0
-autocmd FileType javascript,python,c,cpp,java,vim,shell let g:indentLine_conceallevel=2
+function NoIndentLine()
+    if &filetype=='json' || &filetype=='scheme' || &filetype=='markdown'
+        let g:indentLine_conceallevel=0
+    else
+        let g:indentLine_conceallevel=2
+    endif
+endfunction
+autocmd FileType * call NoIndentLine()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -319,20 +319,20 @@ Plug 'sbdchd/neoformat'
 " 设置neoformat快捷键
 nnoremap <leader>bb :Neoformat<CR>
 
-" 必须写最完整地址
-" 设置js格式化的所用程序
+" 设置各种文件格式化的所用可执行文件地址，必须写最完整地址
+" javascript
 let g:neoformat_javascript_jsbeautify = {
             \ 'exe': '/home/chenmo/node_modules/.bin/js-beautify',
             \ }
 let g:neoformat_enabled_javascript=['jsbeautify']
 
-" 设置json格式化的所用程序
+" json
 let g:neoformat_json_jsbeautify = {
             \ 'exe': '/home/chenmo/node_modules/.bin/js-beautify',
             \ }
 let g:neoformat_enabled_json=['jsbeautify']
 
-" 设置lua格式化的所用程序
+" lua
 let g:neoformat_lua_luafmt = {
             \ 'exe': '/home/chenmo/node_modules/.bin/luafmt',
             \ }
