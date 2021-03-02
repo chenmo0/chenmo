@@ -174,8 +174,8 @@ let g:coc_global_extensions = [
             \'coc-sh', 
             \'coc-tsserver', 
             \'coc-vimlsp',
-            \'coc-actions',
             \'coc-explorer',
+            \'coc-translator',
             \]
 
 " 使用'K'查看文档
@@ -222,12 +222,7 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" coc-actions配置
-function! s:cocActionsOpenFromSelected(type) abort
-    execute 'CocCommand actions.open ' . a:type
-endfunction
-xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
-nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
+" 使用'<leader>a'对当前所选区域操作
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
@@ -301,7 +296,7 @@ autocmd FileType * call NoIndentLine()
 Plug 'preservim/tagbar'
 
 " 设置快捷键
-nnoremap <leader>tt :TagbarToggle<CR>
+nnoremap <leader>ta :TagbarToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
