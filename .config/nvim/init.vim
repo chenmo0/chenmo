@@ -343,8 +343,7 @@ let g:neoformat_enabled_lua=['luafmt']
 " lisp相关
 Plug 'vim-scripts/paredit.vim'
 
-" 在scheme文件中回车自动对齐
-autocmd FileType scheme imap <cr> <a-cr>
-autocmd FileType javascript,python,c,cpp,java,vim,shell,lua,json,markdown,csharp inoremap <cr> <cr>
+" 括号内回车不自动生成空行
+let g:paredit_electric_return=0
 
 call plug#end()
