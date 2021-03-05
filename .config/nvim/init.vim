@@ -163,19 +163,22 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " coc插件列表
 let g:coc_global_extensions = [ 
             \'coc-clangd', 
+            \'coc-clang-format-style-options',
             \'coc-cmake', 
             \'coc-css', 
             \'coc-emmet', 
             \'coc-eslint', 
+            \'coc-explorer',
             \'coc-html', 
+            \'coc-highlight',
             \'coc-json', 
             \'coc-omnisharp', 
             \'coc-pyright', 
             \'coc-sh', 
+            \'coc-tabnine',
+            \'coc-translator',
             \'coc-tsserver', 
             \'coc-vimlsp',
-            \'coc-explorer',
-            \'coc-translator',
             \]
 
 " 使用'K'查看文档
@@ -190,7 +193,7 @@ function! s:show_documentation()
 endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-" 按住光标时突出显示符号及其参考
+" 光标不动时突出光标所在显示符号及其参考
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " 重命名快捷键
@@ -229,6 +232,9 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 " coc-explorer启动目录
 nnoremap <leader>ff :CocCommand explorer<CR>
 
+" coc-translator快捷键
+nnoremap <leader>tr :CocCommand translator.popup<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " hlsl语法高亮
@@ -242,8 +248,11 @@ set rtp^=/path/to/hlsl.vim
 " 在浏览器中预览markdown，依赖node.js和全局yarn
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
-" 自定义css样式地址，写最完整地址或用'~'代替用户目录写为expand('~/a.css')
-" let g:mkdp_markdown_css = expand('~/.config/nvim/markdown_css/a.css')
+" ${name}将替换为文件名
+let g:mkdp_page_title = '「${name}」'
+
+" 自定义css样式地址，写最完整地址或用'~'代替用户目录写为expand('~/path/xxx.css')
+" let g:mkdp_markdown_css = expand('~/.config/nvim/markdown_css/github.css')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -308,30 +317,11 @@ let g:rainbow_active = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" 代码格式化
+" 代码格式化，所用的格式化可执行程序需要在环境变量中
 Plug 'sbdchd/neoformat'
 
 " 设置neoformat快捷键
 nnoremap <leader>bb :Neoformat<CR>
-
-" 设置各种文件格式化的所用可执行文件地址，必须写最完整地址
-" javascript
-let g:neoformat_javascript_jsbeautify = {
-            \ 'exe': '/home/chenmo/node_modules/.bin/js-beautify',
-            \ }
-let g:neoformat_enabled_javascript=['jsbeautify']
-
-" json
-let g:neoformat_json_jsbeautify = {
-            \ 'exe': '/home/chenmo/node_modules/.bin/js-beautify',
-            \ }
-let g:neoformat_enabled_json=['jsbeautify']
-
-" lua
-let g:neoformat_lua_luafmt = {
-            \ 'exe': '/home/chenmo/node_modules/.bin/luafmt',
-            \ }
-let g:neoformat_enabled_lua=['luafmt']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

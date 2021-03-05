@@ -9,8 +9,7 @@
         }
     },
     "explorer.file.hiddenRules": {
-        "extensions": [
-            "meta"
-        ]
-    }
+        "extensions": ["meta"]
+    },
+    "javascript.suggestionActions.enabled": false
 }
