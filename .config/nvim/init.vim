@@ -110,6 +110,10 @@ set sidescroll=1
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
+" f5 一键运行
+" inoremap <f5> <esc>:wa<cr>:!date +\%Y.\%m.\%d-\%T>>./log.log;zsh ./run\|tee -a ./log.log<cr>
+" nnoremap <f5> <esc>:wa<cr>:!date +\%Y.\%m.\%d-\%T>>./log.log;zsh ./run\|tee -a ./log.log<cr>
+nnoremap <f5> <esc>:wa<cr>:!(date +\%Y.\%m.\%d-\%T;zsh ./run;echo "\n")\|tee -a ./log.log<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -148,9 +152,6 @@ Plug 'mhinz/vim-startify'
 
 " 快速生成html代码
 Plug 'mattn/emmet-vim'
-
-" have插件
-Plug 'jdonaldson/vaxe'
 
 " c类语言根据语义高亮，依赖coc.nvim和coc-clangd
 Plug 'jackguo380/vim-lsp-cxx-highlight'
