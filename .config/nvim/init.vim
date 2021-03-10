@@ -111,9 +111,8 @@ set sidescroll=1
 set shortmess+=c
 
 " f5 一键运行
-" inoremap <f5> <esc>:wa<cr>:!date +\%Y.\%m.\%d-\%T>>./log.log;zsh ./run\|tee -a ./log.log<cr>
-" nnoremap <f5> <esc>:wa<cr>:!date +\%Y.\%m.\%d-\%T>>./log.log;zsh ./run\|tee -a ./log.log<cr>
 nnoremap <f5> <esc>:wa<cr>:!(date +\%Y.\%m.\%d-\%T;zsh ./run;echo "\n")\|tee -a ./log.log<cr>
+inoremap <f5> <esc>:wa<cr>:!(date +\%Y.\%m.\%d-\%T;zsh ./run;echo "\n")\|tee -a ./log.log<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
