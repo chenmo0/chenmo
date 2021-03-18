@@ -11,7 +11,7 @@ set inccommand=split
 " set cindent
 
 " 使用系统剪切板
-set clipboard=unnamedplus
+set clipboard+=unnamedplus
 
 " 80行
 set cc=81
@@ -55,7 +55,7 @@ set t_Co=256
 
 " 在txt和markdown文件中启用折行和行号，其他文件中关闭
 function YesorNoWrap()
-    if &filetype=="txt"||&filetype=="markdown"
+    if &filetype=="txt"
         set wrap number
         set signcolumn=auto
         nnoremap <buffer> j gj
@@ -111,12 +111,11 @@ set sidescroll=1
 set shortmess+=c
 
 " f5 一键运行
-nnoremap <f5> <esc>:wa<cr>:!(date +\%Y.\%m.\%d-\%T;zsh ./run;echo "\n")\|tee -a ./log.log<cr>
-inoremap <f5> <esc>:wa<cr>:!(date +\%Y.\%m.\%d-\%T;zsh ./run;echo "\n")\|tee -a ./log.log<cr>
+nnoremap <f5> <esc>:wa<cr>:!(date +\%Y.\%m.\%d-\%T;zsh ./run.sh;echo "\n")\|tee -a ./run.log<cr>
+inoremap <f5> <esc>:wa<cr>:!(date +\%Y.\%m.\%d-\%T;zsh ./run.sh;echo "\n")\|tee -a ./run.log<cr>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 
 
 " vim-plug配置
@@ -217,7 +216,7 @@ command! -nargs=0 Format :call CocAction('format')
 
 " 使用'<leader>n'跳转到前一个错误，'<leader>m'跳转到后一个错误
 nmap <silent> <leader>n <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>m <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>N <Plug>(coc-diagnostic-next)
 
 " 跳转到代码导航
 nmap <silent> gd <Plug>(coc-definition)
