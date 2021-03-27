@@ -4,6 +4,9 @@ let mapleader=','
 " 切换buffer保留撤销
 set hidden
 
+" 切换buffer自动保存
+set autowriteall
+
 " nvim新功能，替换时预览
 set inccommand=split
 
@@ -11,14 +14,13 @@ set inccommand=split
 " set cindent
 
 " 使用系统剪切板
-set clipboard+=unnamedplus
+set clipboard=unnamedplus
 
 " 80行
 set cc=81
 
 " 设置 jj 为esc
-inoremap jj <Esc>
-" vnoremap jj <Esc>
+inoremap jj <Esc>:w<cr>
 
 " 规范缩进
 nnoremap <leader>vv gg0<c-v>G=''
@@ -30,22 +32,14 @@ set cursorline
 " 更快的提示时间
 set updatetime=300
 
-" 自动将 Tab 转为空格
-set expandtab
-
 " tab键转为4个空格
-set softtabstop=4
-set ts=4 sw=4 et
 set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
 
 " 打开语法高亮
 syntax on
-
-" 在底部显示，当前处于哪种模式
-set showmode
-
-" 命令模式下，在底部显示，当前键入的指令
-set showcmd
 
 " 使用 utf-8 编码
 set encoding=utf-8
@@ -53,9 +47,9 @@ set encoding=utf-8
 " 启用256色
 set t_Co=256
 
-" 在txt和markdown文件中启用折行和行号，其他文件中关闭
+" 在txt文件中启用折行和行号，其他文件中关闭
 function YesorNoWrap()
-    if &filetype=="txt"
+    if &filetype=="text"
         set wrap number
         set signcolumn=auto
         nnoremap <buffer> j gj
@@ -73,9 +67,6 @@ autocmd FileType * call YesorNoWrap()
 " 是否显示状态栏。0 表示不显示，1 表示只在多窗口时显示，2 表示显示
 set laststatus=2
 
-" 在状态栏显示光标的当前位置
-set ruler
-
 " 光标遇到圆括号、方括号、大括号时，自动高亮对应的另一个圆括号、方括号和大括号
 set showmatch
 
@@ -87,9 +78,6 @@ set incsearch
 
 " 不创建备份文件
 set nobackup
-
-" 多出一行提示信息空间
-" set cmdheight=2
 
 " 编辑的时候不需要备份文件
 set nowritebackup
@@ -320,7 +308,7 @@ let g:rainbow_active = 1
 Plug 'sbdchd/neoformat'
 
 " 设置neoformat快捷键
-nnoremap <leader>bb :Neoformat<CR>
+nnoremap <leader>bb :Neoformat<cr>:w<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
