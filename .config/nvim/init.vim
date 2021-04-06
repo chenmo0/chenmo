@@ -4,9 +4,6 @@ let mapleader=','
 " 切换buffer保留撤销
 set hidden
 
-" 切换buffer自动保存
-set autowriteall
-
 " nvim新功能, 替换时预览
 set inccommand=split
 
@@ -40,6 +37,12 @@ set expandtab
 
 " 打开语法高亮
 syntax on
+
+" 强制高亮引擎从第一行开始解析文件, 防止解析错误，大文件时会很慢
+" autocmd BufEnter *.md :syn sync fromstart
+
+" 强制高亮引擎从100行前开始解析文件
+autocmd BufEnter *.md :syn sync minlines=100
 
 " 使用 utf-8 编码
 set encoding=utf-8
@@ -142,6 +145,15 @@ Plug 'mattn/emmet-vim'
 " c类语言根据语义高亮, 依赖coc.nvim和coc-clangd
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
+" unicode图标
+" Plug 'ryanoasis/vim-devicons'
+
+" 颜色文本突出显示
+" Plug 'norcalli/nvim-colorizer.lua'
+
+" 显示快捷键
+" Plug 'liuchengxu/vim-which-key'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " coc.nvim配置
@@ -224,6 +236,16 @@ nnoremap <leader>tr :CocCommand translator.popup<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" 复制时高亮复制的内容
+Plug 'machakann/vim-highlightedyank'
+
+map y <Plug>(highlightedyank)
+
+" 设置高亮的时间,负数时一直高亮
+let g:highlightedyank_highlight_duration = 1000
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " hlsl语法高亮
 Plug 'beyondmarc/hlsl.vim'
 
@@ -243,17 +265,21 @@ let g:mkdp_page_title = '「${name}」'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" markdown高亮
+" markdown
+Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 
 " 使用python-mode样式折叠
 let g:vim_markdown_folding_style_pythonic = 1
 
 " 防止设置折叠文本
-" let g:vim_markdown_override_foldtext = 0
+let g:vim_markdown_override_foldtext = 0
 
 " 文字强调限制为单行
 let g:vim_markdown_emphasis_multiline = 0
+
+" 语法隐藏
+set conceallevel=2
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -323,6 +349,16 @@ Plug 'sbdchd/neoformat'
 
 " 设置neoformat快捷键
 nnoremap <leader>bb :Neoformat<cr>:w<cr>
+
+" 在txt文件中启用折行和行号, 其他文件中关闭
+function Md_format_e()
+    if &filetype=="markdown"
+        nnoremap <leader>bb :Neoformat<cr>:w<cr>:e<cr>
+    else
+        nnoremap <leader>bb :Neoformat<cr>
+    endif
+endfunction
+autocmd FileType * call Md_format_e()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
