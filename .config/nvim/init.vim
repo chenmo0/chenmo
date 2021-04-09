@@ -50,19 +50,13 @@ set encoding=utf-8
 " 启用256色
 set t_Co=256
 
-" 在txt文件中启用折行和行号, 其他文件中关闭
-function YesorNoWrap()
-    if &filetype=="text"
-        set wrap number
-        set signcolumn=auto
-        nnoremap <buffer> j gj
-        nnoremap <buffer> k gk
-    else
-        set nowrap nonumber
-        set signcolumn=yes
-    endif
-endfunction
-autocmd FileType * call YesorNoWrap()
+" 默认关闭折行,关闭行号,开启两列提示列
+autocmd FileType * set nowrap nonumber signcolumn=yes
+
+" txt文件中开启折行,开启行号,关闭提示列,行内上下移
+autocmd FileType text set wrap number signcolumn=auto
+autocmd FileType text nnoremap <buffer> j gj
+autocmd FileType text nnoremap <buffer> k gk
 
 " 垂直滚动时, 光标距离顶部/底部的位置
 " set scrolloff=5
@@ -214,7 +208,7 @@ command! -nargs=0 Format :call CocAction('format')
 " 状态行支持
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" 使用'<leader>n'跳转到前一个错误, '<leader>m'跳转到后一个错误
+" 使用'<leader>n'跳转到前一个错误, '<leader>N'跳转到后一个错误
 nmap <silent> <leader>n <Plug>(coc-diagnostic-prev)
 nmap <silent> <leader>N <Plug>(coc-diagnostic-next)
 
@@ -316,15 +310,8 @@ Plug 'vim-airline/vim-airline-themes'
 " 缩进线
 Plug 'Yggdroot/indentLine'
 
-" 在json,markdown,scheme文件中关闭缩进线, 在其他文件中打开
-function NoIndentLine()
-    if &filetype=='json' || &filetype=='scheme' || &filetype=='markdown'
-        let g:indentLine_conceallevel=0
-    else
-        let g:indentLine_conceallevel=2
-    endif
-endfunction
-autocmd FileType * call NoIndentLine()
+autocmd FileType * let g:indentLine_conceallevel=2
+autocmd FileType json,scheme,markdown let g:indentLine_conceallevel=0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -350,15 +337,8 @@ Plug 'sbdchd/neoformat'
 " 设置neoformat快捷键
 nnoremap <leader>bb :Neoformat<cr>:w<cr>
 
-" 在txt文件中启用折行和行号, 其他文件中关闭
-function Md_format_e()
-    if &filetype=="markdown"
-        nnoremap <leader>bb :Neoformat<cr>:w<cr>:e<cr>
-    else
-        nnoremap <leader>bb :Neoformat<cr>
-    endif
-endfunction
-autocmd FileType * call Md_format_e()
+" markdown文件中格式化后重新加载文件
+autocmd FileType markdown nnoremap <buffer> <leader>bb :Neoformat<cr>:w<cr>:e<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
