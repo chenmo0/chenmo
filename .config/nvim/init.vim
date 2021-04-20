@@ -335,7 +335,7 @@ let g:rainbow_active = 1
 Plug 'sbdchd/neoformat'
 
 " 设置neoformat快捷键
-nnoremap <leader>bb :Neoformat<cr>:w<cr>
+nnoremap <leader>bb :Neoformat<cr>
 
 " markdown文件中格式化后重新加载文件
 autocmd FileType markdown nnoremap <buffer> <leader>bb :Neoformat<cr>:w<cr>:e<cr>
