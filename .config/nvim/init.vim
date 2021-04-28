@@ -112,9 +112,6 @@ Plug 'vim-scripts/CSApprox'
 " 缩进块
 " Plug 'nathanaelkane/vim-indent-guides'
 
-" 括号自动补全
-Plug 'jiangmiao/auto-pairs'
-
 " 高亮要查看的单词 <leader>k开启 <leader>K关闭
 Plug 'lfv89/vim-interestingwords'
 
@@ -150,8 +147,17 @@ Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" fzf
+Plug 'junegunn/fzf', {'dir': '~/.fzf','do': './install --all'}
+Plug 'junegunn/fzf.vim' 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " coc.nvim配置
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" coc-fzf
+Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 
 " coc插件列表
 let g:coc_global_extensions = [ 
@@ -227,6 +233,15 @@ nnoremap <leader>ff :CocCommand explorer<CR>
 
 " coc-translator快捷键
 nnoremap <leader>tr :CocCommand translator.popup<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" 括号自动补全
+Plug 'jiangmiao/auto-pairs'
+
+" 在scheme文件中关闭此功能: 删除空括号中前括号便同时删除后括号
+autocmd FileType * let g:AutoPairsMapBS=1
+autocmd FileType scheme let g:AutoPairsMapBS=0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
