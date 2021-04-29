@@ -29,11 +29,13 @@ set cursorline
 " 更快的提示时间
 set updatetime=300
 
-" tab键转为4个空格
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+" tab键转为n个空格
+" set tabstop=4
+" set shiftwidth=4
+" set softtabstop=4
 set expandtab
+autocmd FileType * set tabstop=4 shiftwidth=4 softtabstop=4
+autocmd FileType dart set tabstop=2 shiftwidth=2 softtabstop=2
 
 " 打开语法高亮
 syntax on
@@ -136,6 +138,9 @@ Plug 'mattn/emmet-vim'
 " c类语言根据语义高亮, 依赖coc.nvim和coc-clangd
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
+" dart 语法识别
+Plug 'dart-lang/dart-vim-plugin'
+
 " unicode图标
 " Plug 'ryanoasis/vim-devicons'
 
@@ -168,15 +173,18 @@ let g:coc_global_extensions = [
             \'coc-emmet', 
             \'coc-eslint', 
             \'coc-explorer',
+            \'coc-flutter',
             \'coc-html', 
             \'coc-highlight',
             \'coc-json', 
             \'coc-omnisharp', 
             \'coc-pyright', 
+            \'coc-rust-analyzer',
             \'coc-sh', 
             \'coc-tabnine',
             \'coc-translator',
             \'coc-tsserver', 
+            \'coc-vetur',
             \'coc-vimlsp',
             \]
 
@@ -241,7 +249,7 @@ Plug 'jiangmiao/auto-pairs'
 
 " 在scheme文件中关闭此功能: 删除空括号中前括号便同时删除后括号
 autocmd FileType * let g:AutoPairsMapBS=1
-autocmd FileType scheme let g:AutoPairsMapBS=0
+autocmd FileType scheme,vim let g:AutoPairsMapBS=0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -354,6 +362,9 @@ nnoremap <leader>bb :Neoformat<cr>
 
 " markdown文件中格式化后重新加载文件
 autocmd FileType markdown nnoremap <buffer> <leader>bb :Neoformat<cr>:w<cr>:e<cr>
+
+" dart 使用 :Format
+autocmd FileType dart nnoremap <buffer> <leader>bb :Format<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
