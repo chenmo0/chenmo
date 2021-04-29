@@ -361,7 +361,7 @@ Plug 'sbdchd/neoformat'
 nnoremap <leader>bb :Neoformat<cr>
 
 " markdown文件中格式化后重新加载文件
-autocmd FileType markdown nmap <buffer> <leader>bb :Neoformat<cr>:w<cr>:e<cr>zazazazazA
+autocmd FileType markdown nmap <buffer> <leader>bb :Neoformat<cr>:w<cr>:e<cr>zazazazazazA
 
 " dart 使用 :Format
 autocmd FileType dart nnoremap <buffer> <leader>bb :Format<cr>
