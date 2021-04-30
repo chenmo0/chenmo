@@ -1,11 +1,15 @@
 {
-    "clangd.path": "clangd-10",
     "clangd.semanticHighlighting": true,
     "coc.preferences.extensionUpdateCheck": "daily",
     "languageserver": {
         "lua": {
             "command": "lua-lsp",
             "filetypes": ["lua"]
+        },
+        "godot": {
+            "host": "127.0.0.1",
+            "filetypes": ["gdscript"],
+            "port": 6008
         }
     },
     "explorer.file.hiddenRules": {
