@@ -250,7 +250,7 @@ Plug 'habamax/vim-godot'
 " 设置godot可执行文件
 let g:godot_executable='/var/lib/flatpak/exports/bin/org.godotengine.Godot'
 
-autocmd FileType gdscript nnoremap <buffer> <f5> :GodotRun<cr>
+autocmd FileType gdscript nnoremap <buffer> <f5> <esc>:wa<cr>:GodotRun<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
