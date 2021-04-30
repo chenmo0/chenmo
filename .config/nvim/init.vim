@@ -101,6 +101,8 @@ set shortmess+=c
 nnoremap <f5> <esc>:wa<cr>:!(date +\%Y.\%m.\%d-\%T;zsh ./run.sh;echo "\n")\|tee -a ./run.log<cr>
 inoremap <f5> <esc>:wa<cr>:!(date +\%Y.\%m.\%d-\%T;zsh ./run.sh;echo "\n")\|tee -a ./run.log<cr>
 
+autocmd FileType markdown nnoremap <buffer> <f5> <esc>:wa<cr>:!zsh ~/bin/markdeep/markdeep.sh %<cr>
+autocmd FileType markdown inoremap <buffer> <f5> <esc>:wa<cr>:!zsh ~/bin/markdeep/markdeep.sh %<cr>
 
 
 
@@ -289,6 +291,7 @@ let g:mkdp_page_title = '「${name}」'
 
 " 自定义css样式地址, 写最完整地址或用'~'代替用户目录写为expand('~/path/xxx.css')
 " let g:mkdp_markdown_css = expand('~/.config/nvim/markdown_css/github.css')
+let g:mkdp_markdown_css = expand('~/work/md_demo/aaa.css')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
