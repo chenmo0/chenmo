@@ -30,9 +30,6 @@ set cursorline
 set updatetime=300
 
 " tab键转为n个空格
-" set tabstop=4
-" set shiftwidth=4
-" set softtabstop=4
 set expandtab
 autocmd FileType * set tabstop=4 shiftwidth=4 softtabstop=4
 autocmd FileType dart set tabstop=2 shiftwidth=2 softtabstop=2
@@ -98,11 +95,15 @@ set sidescroll=1
 set shortmess+=c
 
 " f5 一键运行
-nnoremap <f5> <esc>:wa<cr>:!(date +\%Y.\%m.\%d-\%T;zsh ./run.sh;echo "\n")\|tee -a ./run.log<cr>
-inoremap <f5> <esc>:wa<cr>:!(date +\%Y.\%m.\%d-\%T;zsh ./run.sh;echo "\n")\|tee -a ./run.log<cr>
+function Run()
+    exec join(['silent !zsh ~/.config/nvim/g_run.sh ',&filetype,' %'])
+endfunction
+function New_tmux_run()
+    exec join(['silent !zsh ~/.config/nvim/new_tmux_run.sh ',&filetype,' %'])
+endfunction
+noremap <f5> <esc><esc><esc>:wa<cr>:call Run()<cr>
+noremap <leader><f5> <esc><esc><esc>:wa<cr>:call New_tmux_run()<cr>
 
-autocmd FileType markdown nnoremap <buffer> <f5> <esc>:wa<cr>:!zsh ~/bin/markdeep/markdeep.sh %<cr>
-autocmd FileType markdown inoremap <buffer> <f5> <esc>:wa<cr>:!zsh ~/bin/markdeep/markdeep.sh %<cr>
 
 
 
