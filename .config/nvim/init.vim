@@ -98,9 +98,7 @@ set shortmess+=c
 function s:Return_sh()
     let cd_p = 'cd '.expand('`pwd`').';'
     let f_n = expand('%')
-    if &filetype == 'markdown'
-        return 'zsh ~/bin/markdeep/markdeep_run.sh '.f_n
-    elseif filereadable('./run.sh')
+    if filereadable('./run.sh')
         return cd_p.'zsh ./run.sh'
     elseif &filetype == 'python'
         return cd_p.'python3 '.f_n
@@ -125,8 +123,9 @@ function s:New_tmux_run()
     let a = system('echo "'.s:Return_sh().'" > ~/.config/nvim/.ghost')
     let b = system('tmux split-window')
 endfunction
-noremap <f5> <esc><esc><esc>:wa<cr>:call <SID>Run()<cr>
-nnoremap <leader><f5> <esc><esc><esc>:wa<cr>:call <SID>New_tmux_run()<cr>
+noremap <f5> <esc><esc>:wa<cr>:call <SID>Run()<cr>
+nnoremap <leader><f5> <esc><esc>:wa<cr>:call <SID>New_tmux_run()<cr>
+autocmd FileType markdown noremap <buffer> <f5> <esc><esc>:wa<cr>:silent !zsh ~/bin/markdeep/markdeep_run.sh %<cr>
 
 
 
