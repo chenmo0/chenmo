@@ -96,10 +96,10 @@ set shortmess+=c
 
 " f5 一键运行
 function Run()
-    exec join(['!zsh ~/.config/nvim/g_run.sh ',&filetype,' %'])
+    exec join(['!zsh ~/.config/nvim/g_run.sh `pwd` ',&filetype,' %'])
 endfunction
 function New_tmux_run()
-    exec join(['silent !zsh ~/.config/nvim/new_tmux_run.sh ',&filetype,' %'])
+    exec join(['silent !zsh ~/.config/nvim/new_tmux_run.sh `pwd` ',&filetype,' %'])
 endfunction
 noremap <f5> <esc><esc><esc>:wa<cr>:call Run()<cr>
 nnoremap <leader><f5> <esc><esc><esc>:wa<cr>:call New_tmux_run()<cr>
