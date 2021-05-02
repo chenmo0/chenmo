@@ -95,14 +95,38 @@ set sidescroll=1
 set shortmess+=c
 
 " f5 一键运行
-function Run()
-    exec join(['!zsh ~/.config/nvim/g_run.sh `pwd` ',&filetype,' %'])
+function s:Return_sh()
+    let cd_p = 'cd '.expand('`pwd`').';'
+    let f_n = expand('%')
+    if &filetype == 'markdown'
+        return 'zsh ~/bin/markdeep/markdeep_run.sh '.f_n
+    elseif filereadable('./run.sh')
+        return cd_p.'zsh ./run.sh'
+    elseif &filetype == 'python'
+        return cd_p.'python3 '.f_n
+    elseif &filetype == 'javascript'
+        return cd_p.'node '.f_n
+    elseif &filetype == 'scheme'
+        return cd_p.'chezscheme --script '.f_n
+    elseif &filetype == 'html'
+        return cd_p.'google-chrome-stable '.f_n
+    elseif &filetype == 'c'
+        return cd_p.'gcc '.f_n.' -o '.f_n.'.out && ./'.f_n.'.out'
+    elseif &filetype == 'sh'
+        return cd_p.'zsh '.f_n
+    else
+        return 'echo "运行指令未定义"'
+    endif
 endfunction
-function New_tmux_run()
-    exec join(['silent !zsh ~/.config/nvim/new_tmux_run.sh `pwd` ',&filetype,' %'])
+function s:Run()
+    execute '!'.s:Return_sh()
 endfunction
-noremap <f5> <esc><esc><esc>:wa<cr>:call Run()<cr>
-nnoremap <leader><f5> <esc><esc><esc>:wa<cr>:call New_tmux_run()<cr>
+function s:New_tmux_run()
+    let a = system('echo "'.s:Return_sh().'" > ~/.config/nvim/.ghost')
+    let b = system('tmux split-window')
+endfunction
+noremap <f5> <esc><esc><esc>:wa<cr>:call <SID>Run()<cr>
+nnoremap <leader><f5> <esc><esc><esc>:wa<cr>:call <SID>New_tmux_run()<cr>
 
 
 
@@ -335,7 +359,7 @@ let g:OmniSharp_highlighting = 0
 Plug 'joshdick/onedark.vim'
 
 " nvim加载完成后启用onedark主题
-autocmd VimEnter * colorscheme onedark
+" autocmd VimEnter * colorscheme onedark
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -392,3 +416,5 @@ Plug 'vim-scripts/paredit.vim'
 let g:paredit_electric_return=0
 
 call plug#end()
+
+colorscheme onedark
