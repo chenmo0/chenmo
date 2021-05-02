@@ -102,7 +102,7 @@ function New_tmux_run()
     exec join(['silent !zsh ~/.config/nvim/new_tmux_run.sh ',&filetype,' %'])
 endfunction
 noremap <f5> <esc><esc><esc>:wa<cr>:call Run()<cr>
-noremap <leader><f5> <esc><esc><esc>:wa<cr>:call New_tmux_run()<cr>
+nnoremap <leader><f5> <esc><esc><esc>:wa<cr>:call New_tmux_run()<cr>
 
 
 
@@ -143,6 +143,9 @@ Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " dart 语法识别
 Plug 'dart-lang/dart-vim-plugin'
+
+" 浮动终端
+Plug 'voldikss/vim-floaterm'
 
 " unicode图标
 " Plug 'ryanoasis/vim-devicons'
