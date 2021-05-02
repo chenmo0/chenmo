@@ -197,7 +197,6 @@ let g:coc_global_extensions = [
             \'coc-clang-format-style-options',
             \'coc-cmake', 
             \'coc-css', 
-            \'coc-emmet', 
             \'coc-eslint', 
             \'coc-explorer',
             \'coc-flutter',
@@ -387,8 +386,9 @@ nnoremap <leader>ta :TagbarToggle<CR>
 " 彩虹括号
 Plug 'luochen1990/rainbow'
 
-" 启用彩虹括号
-let g:rainbow_active = 1
+" 在除了html以外的文件中启用彩虹括号
+autocmd FileType * let g:rainbow_active = 1
+autocmd FileType html let g:rainbow_active = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
