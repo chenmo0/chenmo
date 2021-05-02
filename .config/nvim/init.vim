@@ -159,9 +159,6 @@ Plug 'tpope/vim-surround'
 " 启动界面
 Plug 'mhinz/vim-startify'
 
-" 快速生成html代码
-Plug 'mattn/emmet-vim'
-
 " c类语言根据语义高亮, 依赖coc.nvim和coc-clangd
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
@@ -406,6 +403,14 @@ autocmd FileType markdown nmap <buffer> <leader>bb :Neoformat<cr>:w<cr>:e<cr>zv
 
 " dart 使用 :Format
 autocmd FileType dart nnoremap <buffer> <leader>bb :Format<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" 快速生成html代码
+Plug 'mattn/emmet-vim'
+
+" 重定义emmet快捷键
+autocmd FileType html,css nmap <buffer> <leader>em <c-y>,
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
