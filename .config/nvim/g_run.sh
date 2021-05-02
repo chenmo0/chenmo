@@ -28,6 +28,9 @@ then
 elif test $2 = sh
 then
     zsh $3
+elif test $2 = html
+then
+    google-chrome-stable $3
 else
     echo "运行指令未定义"
 fi
