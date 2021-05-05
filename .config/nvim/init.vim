@@ -94,39 +94,6 @@ set sidescroll=1
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-" f5 一键运行
-function s:Return_sh()
-    let cd_p = 'cd '.expand('`pwd`').';'
-    let f_n = expand('%')
-    if filereadable('./run.sh')
-        return cd_p.'zsh ./run.sh'
-    elseif &filetype == 'python'
-        return cd_p.'python3 '.f_n
-    elseif &filetype == 'javascript'
-        return cd_p.'node '.f_n
-    elseif &filetype == 'scheme'
-        return cd_p.'chezscheme --script '.f_n
-    elseif &filetype == 'html'
-        return cd_p.'google-chrome-stable '.f_n
-    elseif &filetype == 'c'
-        return cd_p.'gcc '.f_n.' -o '.f_n.'.out && ./'.f_n.'.out'
-    elseif &filetype == 'sh'
-        return cd_p.'zsh '.f_n
-    else
-        return 'echo "运行指令未定义"'
-    endif
-endfunction
-function s:Run()
-    execute '!'.s:Return_sh()
-endfunction
-function s:New_tmux_run()
-    let a = system('echo "'.s:Return_sh().'" > ~/.config/nvim/.ghost')
-    let b = system('tmux split-window')
-endfunction
-noremap <f5> <esc><esc>:wa<cr>:call <SID>Run()<cr>
-nnoremap <leader><f5> <esc><esc>:wa<cr>:call <SID>New_tmux_run()<cr>
-autocmd FileType markdown noremap <buffer> <f5> <esc><esc>:wa<cr>:silent !zsh ~/bin/markdeep/markdeep_run.sh %<cr>
-
 
 
 
@@ -164,9 +131,6 @@ Plug 'jackguo380/vim-lsp-cxx-highlight'
 " dart 语法识别
 Plug 'dart-lang/dart-vim-plugin'
 
-" 浮动终端
-Plug 'voldikss/vim-floaterm'
-
 " unicode图标
 " Plug 'ryanoasis/vim-devicons'
 
@@ -191,27 +155,31 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 
 " coc插件列表
-let g:coc_global_extensions = [ 
-            \'coc-clangd', 
+let g:coc_global_extensions = [
+            \'coc-clangd',
             \'coc-clang-format-style-options',
-            \'coc-cmake', 
-            \'coc-css', 
-            \'coc-eslint', 
+            \'coc-cmake',
+            \'coc-css',
+            \'coc-docthis',
+            \'coc-eslint',
             \'coc-explorer',
             \'coc-flutter',
-            \'coc-html', 
+            \'coc-html',
             \'coc-highlight',
-            \'coc-json', 
-            \'coc-omnisharp', 
-            \'coc-pyright', 
+            \'coc-json',
+            \'coc-omnisharp',
+            \'coc-pyright',
             \'coc-rust-analyzer',
-            \'coc-sh', 
+            \'coc-sh',
             \'coc-tabnine',
             \'coc-translator',
-            \'coc-tsserver', 
+            \'coc-tsserver',
             \'coc-vetur',
             \'coc-vimlsp',
             \]
+
+" 快速生成jsdoc
+autocmd FileType javascript nnoremap <buffer> <leader>jd :CocCommand docthis.documentThis<cr>
 
 " 使用'K'查看文档
 function! s:show_documentation()
@@ -241,8 +209,15 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
     vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
-" 使用 :Format 格式化当前缓冲区
-command! -nargs=0 Format :call CocAction('format')
+" dart 使用lsp自带格式化引擎
+autocmd FileType dart nnoremap <buffer> <leader>bb :call CocAction('format')<cr>
+
+" 使用coc-prettier
+autocmd FileType html,javascript,css,json,typescript,vue,less,scss
+            \,yaml nnoremap <buffer> <leader>bb :CocCommand prettier.formatFile<cr>
+
+" markdown文件格式化后重新加载
+autocmd FileType markdown nnoremap <buffer> <leader>bb :CocCommand prettier.formatFile<cr>:w<cr>:e<cr>zv
 
 " 状态行支持
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
@@ -269,13 +244,24 @@ nnoremap <leader>tr :CocCommand translator.popup<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" 浮动终端
+Plug 'voldikss/vim-floaterm'
+
+" 打开终端后不进入输入模式
+let g:floaterm_autoinsert=v:false
+
+nnoremap <silent> <leader>ww :FloatermToggle<cr>
+tnoremap <silent> <leader>ww :FloatermToggle<cr>
+tnoremap <silent> <leader>ww <c-\><c-n>:FloatermToggle<cr>
+tnoremap <silent> jj <c-\><c-n>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " godot
 Plug 'habamax/vim-godot'
 
 " 设置godot可执行文件
 let g:godot_executable='/var/lib/flatpak/exports/bin/org.godotengine.Godot'
-
-autocmd FileType gdscript nnoremap <buffer> <f5> <esc>:wa<cr>:GodotRun<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -397,12 +383,6 @@ Plug 'sbdchd/neoformat'
 " 设置neoformat快捷键
 nnoremap <leader>bb :Neoformat<cr>
 
-" markdown文件中格式化后重新加载文件
-autocmd FileType markdown nmap <buffer> <leader>bb :Neoformat<cr>:w<cr>:e<cr>zv
-
-" dart 使用 :Format
-autocmd FileType dart nnoremap <buffer> <leader>bb :Format<cr>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " 快速生成html代码
@@ -421,4 +401,52 @@ let g:paredit_electric_return=0
 
 call plug#end()
 
+
+
+
+
 colorscheme onedark
+
+" f5 一键运行
+function s:Run_sh_str()
+    let f_n = expand('%')
+    if &filetype == 'markdown'
+        return 'zsh ~/bin/markdeep/markdeep_run.sh '.f_n
+    elseif filereadable('./run.sh')
+        return 'zsh ./run.sh'
+    elseif &filetype == 'python'
+        return 'python3 '.f_n
+    elseif &filetype == 'javascript'
+        return 'node '.f_n
+    elseif &filetype == 'scheme'
+        return 'chezscheme --script '.f_n
+    elseif &filetype == 'html'
+        return 'google-chrome-stable '.f_n
+    elseif &filetype == 'c'
+        return 'gcc '.f_n.' -o '.f_n.'.out && ./'.f_n.'.out'
+    elseif &filetype == 'sh'
+        return 'zsh '.f_n
+    else
+        return 'echo "运行指令未定义"'
+    endif
+endfunction
+function s:Run()
+    if filereadable('./run.vim')
+        source './run.vim'
+    elseif &filetype == 'floaterm'
+    elseif &filetype == 'gdscript'
+        execute 'GodotRun'
+    else
+        let sh = s:Run_sh_str()
+        execute 'FloatermToggle'
+        execute 'FloatermSend '.sh
+    endif
+endfunction
+function s:F5()
+    execute 'FloatermNew --silent'
+    function Aaa(id)
+        noremap <silent> <f5> <esc><esc>:wa<cr>:call <SID>Run()<cr>
+    endfunction
+    let timer = timer_start(3000,'Aaa')
+endfunction
+autocmd VimEnter * call <SID>F5()
